@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>设计模式之工厂模式 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="工厂模式个人理解工厂方法用来处理对象的创建，该内容出现的地方可以是单独的对象、子类的具体实现  简单工厂：对创建对象的代码进行封装，形成一个工厂类。（严格意义上是一种编程习惯） 工厂方法：包含抽象的工厂类以及该抽象的实现类，由实现类决定最后创建的对象是什么。在创建对象中，相同的部分在抽象类中，不同的部分有抽象方法+实现类决定。重点在继承  通过子类来创建对象，客户只需要知道所使用的抽象类型，子类决">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式之工厂模式">
+<meta property="og:url" content="http://yoursite.com/2019/04/02/ma1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="工厂模式个人理解工厂方法用来处理对象的创建，该内容出现的地方可以是单独的对象、子类的具体实现  简单工厂：对创建对象的代码进行封装，形成一个工厂类。（严格意义上是一种编程习惯） 工厂方法：包含抽象的工厂类以及该抽象的实现类，由实现类决定最后创建的对象是什么。在创建对象中，相同的部分在抽象类中，不同的部分有抽象方法+实现类决定。重点在继承  通过子类来创建对象，客户只需要知道所使用的抽象类型，子类决">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-18T13:49:41.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式之工厂模式">
+<meta name="twitter:description" content="工厂模式个人理解工厂方法用来处理对象的创建，该内容出现的地方可以是单独的对象、子类的具体实现  简单工厂：对创建对象的代码进行封装，形成一个工厂类。（严格意义上是一种编程习惯） 工厂方法：包含抽象的工厂类以及该抽象的实现类，由实现类决定最后创建的对象是什么。在创建对象中，相同的部分在抽象类中，不同的部分有抽象方法+实现类决定。重点在继承  通过子类来创建对象，客户只需要知道所使用的抽象类型，子类决">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ma1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/02/ma1/" class="article-date">
+  <time datetime="2019-04-01T16:00:00.000Z" itemprop="datePublished">2019-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      设计模式之工厂模式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><h5 id="个人理解"><a href="#个人理解" class="headerlink" title="个人理解"></a>个人理解</h5><p>工厂方法用来处理对象的创建，该内容出现的地方可以是单独的对象、子类的具体实现</p>
+<ul>
+<li>简单工厂：对创建对象的代码进行封装，形成一个工厂类。（严格意义上是一种编程习惯）</li>
+<li><p>工厂方法：包含抽象的工厂类以及该抽象的实现类，由实现类决定最后创建的对象是什么。在创建对象中，相同的部分在抽象类中，不同的部分有抽象方法+实现类决定。<strong><em>重点在继承</em></strong></p>
+<blockquote>
+<p>通过子类来创建对象，客户只需要知道所使用的抽象类型，子类决定具体类型，只负责将客户端从具体实现中解耦。<br>把对象的创建委托给子类，子类实现工厂方法来创建对象</p>
+</blockquote>
+</li>
+<li><p>抽象工厂：用抽象接口类代替原来的工厂方法中的抽象基类，(实现类或许能够对多个接口进行实现组合)。<strong><em>重点在对象组合</em></strong></p>
+<blockquote>
+<p>提供一个用来创建一个产品家族的抽象类型，该类型的子类定义了产品被生产的方法。如果想使用，必须先实例化，然后将它传入针对抽象所写的代码中，如果需要扩展，那就要修改接口。<br>对象的创建被实现在工厂接口暴露出来的方法中</p>
+</blockquote>
+</li>
+</ul>
+<p><em>相比工厂方法的创建一个产品，抽象工厂是创建一个产品家族，这一点不是很懂（所谓产品家族就是多种不同的具体实现对象？这么说工厂方法就是一条流水线，抽象工厂就是多条流水线，工厂根据条件一次只能生产一种，抽象工厂根据条件一次能够生产多种。上衣工厂根据条件生产某种上衣，服装抽象工厂能够根据条件生产一套衣服，这样的感觉？）</em></p>
+<h5 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h5><ul>
+<li>简单工厂</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">  String name;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">output</span><span class="params">()</span></span>&#123;</span><br><span class="line">    sout(name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductOne</span> <span class="keyword">extends</span> <span class="title">Product</span></span>&#123;</span><br><span class="line">  ProductOne()&#123;</span><br><span class="line">    name = <span class="string">"ProductOne"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductTwo</span> <span class="keyword">extends</span> <span class="title">Product</span></span>&#123;</span><br><span class="line">  ProductOne()&#123;</span><br><span class="line">    name = <span class="string">"ProductTwo"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//对创建对象的代码进行封装</span></span><br><span class="line"><span class="function">Product <span class="title">createObj</span><span class="params">(String type)</span></span>&#123;</span><br><span class="line">  Product obj = <span class="keyword">null</span>;</span><br><span class="line">  <span class="keyword">if</span> (type.equals(<span class="string">"one"</span>)) &#123;</span><br><span class="line">    obj = <span class="keyword">new</span> ProductOne();</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"two"</span>)) &#123;</span><br><span class="line">    obj = <span class="keyword">new</span> ProductTwo();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//最后调用</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(String type)</span></span>&#123;</span><br><span class="line">  Product obj;</span><br><span class="line">  obj = createObj(type);</span><br><span class="line">  obj.output();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>工厂方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">  String name;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">output</span><span class="params">()</span></span>&#123;</span><br><span class="line">    sout(name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductOne</span> <span class="keyword">extends</span> <span class="title">Product</span></span>&#123;</span><br><span class="line">  ProductOne(String from)&#123;</span><br><span class="line">    name = <span class="string">"ProductOne from "</span> + from;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductTwo</span> <span class="keyword">extends</span> <span class="title">Product</span></span>&#123;</span><br><span class="line">  ProductOne(String from)&#123;</span><br><span class="line">    name = <span class="string">"ProductTwo from "</span> + from;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//抽象出来的工厂,实现了所有操作产品的方法</span></span><br><span class="line"><span class="comment">//但没有实现生产方法</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Creator</span></span>&#123;</span><br><span class="line">  <span class="comment">//该类包含一些固定的不允许改变的操作未列出</span></span><br><span class="line">  ....</span><br><span class="line"></span><br><span class="line">  <span class="comment">//不同的地方使用抽象方法，具体实现交由子类</span></span><br><span class="line">  <span class="function"><span class="keyword">abstract</span> Product <span class="title">createObj</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreatorOne</span> <span class="keyword">extends</span> <span class="title">Creator</span></span>&#123;</span><br><span class="line">    <span class="function">Product <span class="title">createObj</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="comment">//根据type自己的一套生产</span></span><br><span class="line">      <span class="comment">//这里可以对产品融入一些自己工厂的特色</span></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> ProductOne(<span class="string">"CreatorOne"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreatorTwo</span> <span class="keyword">extends</span> <span class="title">Creator</span></span>&#123;</span><br><span class="line">    <span class="function">Product <span class="title">createObj</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="comment">//根据type自己的一套生产</span></span><br><span class="line">      <span class="comment">//这里可以对产品融入一些自己工厂的特色</span></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> ProductTwo(<span class="string">"CreatorTwo"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">//此时就要先实例化一个工厂对象，再根据type生产对象</span></span><br><span class="line">  Creator one = <span class="keyword">new</span> CreatorOne();</span><br><span class="line">  Creator two = <span class="keyword">new</span> CreatorTwo();</span><br><span class="line">  Product product = one.createObj();</span><br><span class="line">  product.output();</span><br><span class="line">  product = two.createObj();</span><br><span class="line">  product.output();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>抽象工厂</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//组件</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">  String part1;</span><br><span class="line">  String part2;</span><br><span class="line">  String part3;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">output</span><span class="params">()</span></span>&#123;</span><br><span class="line">    sout(part1 + part2 + part3);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">createPart</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductOne</span> <span class="keyword">extends</span> <span class="title">Product</span></span>&#123;</span><br><span class="line">  Creator mCreator;</span><br><span class="line">  ProductOne(Creator creator)&#123;</span><br><span class="line">    mCreator = creator;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">createPart</span><span class="params">()</span></span>&#123;</span><br><span class="line">    part1 = mCreator.createPartOne();</span><br><span class="line">    part2 = mCreator.createPartTwo();</span><br><span class="line">    part3 = mCreator.createPartThree();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Creator</span></span>&#123;</span><br><span class="line">  <span class="function">String <span class="title">createPartOne</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function">String <span class="title">createPartTwo</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function">String <span class="title">createPartThree</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreatorOne</span> <span class="keyword">implements</span> <span class="title">Creator</span></span>&#123;</span><br><span class="line">  <span class="function">String <span class="title">createPartOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"CreatorOne add part1"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">String <span class="title">createPartTwo</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"CreatorOne add part2"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">String <span class="title">createPartThree</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"CreatorOne add part3"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreatorTwo</span> <span class="keyword">implements</span> <span class="title">Creator</span></span>&#123;</span><br><span class="line">  <span class="function">String <span class="title">createPartOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"CreatorTwo add part1"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">String <span class="title">createPartTwo</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"CreatorTwo add part2"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">String <span class="title">createPartThree</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"CreatorTwo add part3"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">//此时就要先实例化一个工厂对象，再根据type生产对象</span></span><br><span class="line">  Product product;</span><br><span class="line">  product = <span class="keyword">new</span> ProductOne(<span class="keyword">new</span> CreatorOne());</span><br><span class="line">  product.createPart();</span><br><span class="line">  product.output();</span><br><span class="line">  product = <span class="keyword">new</span> ProductOne(<span class="keyword">new</span> CreatorTwo());</span><br><span class="line">  product.createPart();</span><br><span class="line">  product.output();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h5><p>交通工具</p>
+<p>注：存在例子不完全契合的情况</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/02/ma1/" data-id="cjumpcc650001xebqppcdjjvk" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/18/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/18/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/02/ma1/">设计模式之工厂模式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
