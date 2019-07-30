@@ -5,8 +5,8 @@
  * that can be found at http://live2d.com/eula/live2d-open-software-license-agreement_en.html.
  */
 
-import {Live2DCubismFramework as live2dcubismframework, Option as Csm_Option, LogLevel} from "../../../../Framework/live2dcubismframework";
-import {Live2DCubismFramework as cubismmatrix44} from "../../../../Framework/math/cubismmatrix44";
+import {Live2DCubismFramework as live2dcubismframework, Option as Csm_Option, LogLevel} from "../Framework/live2dcubismframework";
+import {Live2DCubismFramework as cubismmatrix44} from "../Framework/math/cubismmatrix44";
 import Csm_CubismMatrix44 = cubismmatrix44.CubismMatrix44;
 import Csm_CubismFramework = live2dcubismframework.CubismFramework;
 import {LAppView} from "./lappview";
