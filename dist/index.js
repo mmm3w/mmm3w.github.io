@@ -11198,7 +11198,7 @@ var LAppDefine;
     LAppDefine.ViewLogicalMaxBottom = -2.0;
     LAppDefine.ViewLogicalMaxTop = 2.0;
     // 相対パス
-    LAppDefine.ResourcesPath = "./Resources/";
+    LAppDefine.ResourcesPath = "./Resources";
     // モデルの後ろにある背景の画像ファイル
     LAppDefine.BackImageName = "";
     // 歯車
