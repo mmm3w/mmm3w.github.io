@@ -11753,7 +11753,7 @@ var LAppLive2DManager = /** @class */ (function () {
         // model3.jsonのパスを決定する。
         // ディレクトリ名とmodel3.jsonの名前を一致させておくこと。
         var model = _lappdefine__WEBPACK_IMPORTED_MODULE_3__["LAppDefine"].ModelDir[index];
-        var modelPath = _lappdefine__WEBPACK_IMPORTED_MODULE_3__["LAppDefine"].ResourcesPath + model + "/";
+        var modelPath = _lappdefine__WEBPACK_IMPORTED_MODULE_3__["LAppDefine"].ResourcesPath +"/"+ model + "/";
         var modelJsonName = _lappdefine__WEBPACK_IMPORTED_MODULE_3__["LAppDefine"].ModelDir[index];
         modelJsonName += ".model3.json";
         this.releaseAllModel();
