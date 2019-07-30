@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./Sample/TypeScript/Demo/src/main.ts");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/main.ts");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -11165,9 +11165,9 @@ var Live2DCubismFramework;
 
 /***/ }),
 
-/***/ "./Sample/TypeScript/Demo/src/lappdefine.ts":
+/***/ "./src/lappdefine.ts":
 /*!**************************************************!*\
-  !*** ./Sample/TypeScript/Demo/src/lappdefine.ts ***!
+  !*** ./src/lappdefine.ts ***!
   \**************************************************/
 /*! exports provided: LAppDefine */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -11198,7 +11198,7 @@ var LAppDefine;
     LAppDefine.ViewLogicalMaxBottom = -2.0;
     LAppDefine.ViewLogicalMaxTop = 2.0;
     // 相対パス
-    LAppDefine.ResourcesPath = "./Resources";
+    LAppDefine.ResourcesPath = "./Resources/";
     // モデルの後ろにある背景の画像ファイル
     LAppDefine.BackImageName = "";
     // 歯車
@@ -11233,9 +11233,9 @@ var LAppDefine;
 
 /***/ }),
 
-/***/ "./Sample/TypeScript/Demo/src/lappdelegate.ts":
+/***/ "./src/lappdelegate.ts":
 /*!****************************************************!*\
-  !*** ./Sample/TypeScript/Demo/src/lappdelegate.ts ***!
+  !*** ./src/lappdelegate.ts ***!
   \****************************************************/
 /*! exports provided: canvas, s_instance, gl, frameBuffer, LAppDelegate */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -11249,11 +11249,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LAppDelegate", function() { return LAppDelegate; });
 /* harmony import */ var _Framework_live2dcubismframework__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../Framework/live2dcubismframework */ "./Framework/live2dcubismframework.ts");
 /* harmony import */ var _Framework_math_cubismmatrix44__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../Framework/math/cubismmatrix44 */ "./Framework/math/cubismmatrix44.ts");
-/* harmony import */ var _lappview__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lappview */ "./Sample/TypeScript/Demo/src/lappview.ts");
-/* harmony import */ var _lapppal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lapppal */ "./Sample/TypeScript/Demo/src/lapppal.ts");
-/* harmony import */ var _lapptexturemanager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lapptexturemanager */ "./Sample/TypeScript/Demo/src/lapptexturemanager.ts");
-/* harmony import */ var _lapplive2dmanager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lapplive2dmanager */ "./Sample/TypeScript/Demo/src/lapplive2dmanager.ts");
-/* harmony import */ var _lappdefine__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lappdefine */ "./Sample/TypeScript/Demo/src/lappdefine.ts");
+/* harmony import */ var _lappview__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lappview */ "./src/lappview.ts");
+/* harmony import */ var _lapppal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lapppal */ "./src/lapppal.ts");
+/* harmony import */ var _lapptexturemanager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lapptexturemanager */ "./src/lapptexturemanager.ts");
+/* harmony import */ var _lapplive2dmanager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lapplive2dmanager */ "./src/lapplive2dmanager.ts");
+/* harmony import */ var _lappdefine__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lappdefine */ "./src/lappdefine.ts");
 /*
  * Copyright(c) Live2D Inc. All rights reserved.
  *
@@ -11577,9 +11577,9 @@ function onTouchCancel(e) {
 
 /***/ }),
 
-/***/ "./Sample/TypeScript/Demo/src/lapplive2dmanager.ts":
+/***/ "./src/lapplive2dmanager.ts":
 /*!*********************************************************!*\
-  !*** ./Sample/TypeScript/Demo/src/lapplive2dmanager.ts ***!
+  !*** ./src/lapplive2dmanager.ts ***!
   \*********************************************************/
 /*! exports provided: s_instance, LAppLive2DManager */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -11590,10 +11590,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LAppLive2DManager", function() { return LAppLive2DManager; });
 /* harmony import */ var _Framework_math_cubismmatrix44__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../Framework/math/cubismmatrix44 */ "./Framework/math/cubismmatrix44.ts");
 /* harmony import */ var _Framework_type_csmvector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../Framework/type/csmvector */ "./Framework/type/csmvector.ts");
-/* harmony import */ var _lappmodel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lappmodel */ "./Sample/TypeScript/Demo/src/lappmodel.ts");
-/* harmony import */ var _lappdefine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lappdefine */ "./Sample/TypeScript/Demo/src/lappdefine.ts");
-/* harmony import */ var _lapppal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lapppal */ "./Sample/TypeScript/Demo/src/lapppal.ts");
-/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lappdelegate */ "./Sample/TypeScript/Demo/src/lappdelegate.ts");
+/* harmony import */ var _lappmodel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lappmodel */ "./src/lappmodel.ts");
+/* harmony import */ var _lappdefine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lappdefine */ "./src/lappdefine.ts");
+/* harmony import */ var _lapppal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lapppal */ "./src/lapppal.ts");
+/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lappdelegate */ "./src/lappdelegate.ts");
 /*
 * Copyright(c) Live2D Inc. All rights reserved.
 *
@@ -11767,9 +11767,9 @@ var LAppLive2DManager = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./Sample/TypeScript/Demo/src/lappmodel.ts":
+/***/ "./src/lappmodel.ts":
 /*!*************************************************!*\
-  !*** ./Sample/TypeScript/Demo/src/lappmodel.ts ***!
+  !*** ./src/lappmodel.ts ***!
   \*************************************************/
 /*! exports provided: LAppModel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -11789,9 +11789,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Framework_utils_cubismstring__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../Framework/utils/cubismstring */ "./Framework/utils/cubismstring.ts");
 /* harmony import */ var _Framework_motion_cubismmotionqueuemanager__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../Framework/motion/cubismmotionqueuemanager */ "./Framework/motion/cubismmotionqueuemanager.ts");
 /* harmony import */ var _Framework_utils_cubismdebug__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../Framework/utils/cubismdebug */ "./Framework/utils/cubismdebug.ts");
-/* harmony import */ var _lappdefine__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lappdefine */ "./Sample/TypeScript/Demo/src/lappdefine.ts");
-/* harmony import */ var _lapppal__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lapppal */ "./Sample/TypeScript/Demo/src/lapppal.ts");
-/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./lappdelegate */ "./Sample/TypeScript/Demo/src/lappdelegate.ts");
+/* harmony import */ var _lappdefine__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lappdefine */ "./src/lappdefine.ts");
+/* harmony import */ var _lapppal__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lapppal */ "./src/lapppal.ts");
+/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./lappdelegate */ "./src/lappdelegate.ts");
 /* harmony import */ var whatwg_fetch__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! whatwg-fetch */ "./node_modules/whatwg-fetch/fetch.js");
 /*
 * Copyright(c) Live2D Inc. All rights reserved.
@@ -12493,9 +12493,9 @@ var LAppModel = /** @class */ (function (_super) {
 
 /***/ }),
 
-/***/ "./Sample/TypeScript/Demo/src/lapppal.ts":
+/***/ "./src/lapppal.ts":
 /*!***********************************************!*\
-  !*** ./Sample/TypeScript/Demo/src/lapppal.ts ***!
+  !*** ./src/lapppal.ts ***!
   \***********************************************/
 /*! exports provided: LAppPal */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -12589,9 +12589,9 @@ var LAppPal = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./Sample/TypeScript/Demo/src/lappsprite.ts":
+/***/ "./src/lappsprite.ts":
 /*!**************************************************!*\
-  !*** ./Sample/TypeScript/Demo/src/lappsprite.ts ***!
+  !*** ./src/lappsprite.ts ***!
   \**************************************************/
 /*! exports provided: LAppSprite, Rect */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -12600,7 +12600,7 @@ var LAppPal = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LAppSprite", function() { return LAppSprite; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Rect", function() { return Rect; });
-/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lappdelegate */ "./Sample/TypeScript/Demo/src/lappdelegate.ts");
+/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lappdelegate */ "./src/lappdelegate.ts");
 /*
 * Copyright(c) Live2D Inc. All rights reserved.
 *
@@ -12762,9 +12762,9 @@ var Rect = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./Sample/TypeScript/Demo/src/lapptexturemanager.ts":
+/***/ "./src/lapptexturemanager.ts":
 /*!**********************************************************!*\
-  !*** ./Sample/TypeScript/Demo/src/lapptexturemanager.ts ***!
+  !*** ./src/lapptexturemanager.ts ***!
   \**********************************************************/
 /*! exports provided: LAppTextureManager, TextureInfo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -12774,7 +12774,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LAppTextureManager", function() { return LAppTextureManager; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TextureInfo", function() { return TextureInfo; });
 /* harmony import */ var _Framework_type_csmvector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../Framework/type/csmvector */ "./Framework/type/csmvector.ts");
-/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lappdelegate */ "./Sample/TypeScript/Demo/src/lappdelegate.ts");
+/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lappdelegate */ "./src/lappdelegate.ts");
 /*
  * Copyright(c) Live2D Inc. All rights reserved.
  *
@@ -12924,9 +12924,9 @@ var TextureInfo = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./Sample/TypeScript/Demo/src/lappview.ts":
+/***/ "./src/lappview.ts":
 /*!************************************************!*\
-  !*** ./Sample/TypeScript/Demo/src/lappview.ts ***!
+  !*** ./src/lappview.ts ***!
   \************************************************/
 /*! exports provided: LAppView */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -12936,12 +12936,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LAppView", function() { return LAppView; });
 /* harmony import */ var _Framework_math_cubismmatrix44__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../Framework/math/cubismmatrix44 */ "./Framework/math/cubismmatrix44.ts");
 /* harmony import */ var _Framework_math_cubismviewmatrix__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../Framework/math/cubismviewmatrix */ "./Framework/math/cubismviewmatrix.ts");
-/* harmony import */ var _touchmanager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./touchmanager */ "./Sample/TypeScript/Demo/src/touchmanager.ts");
-/* harmony import */ var _lappdefine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lappdefine */ "./Sample/TypeScript/Demo/src/lappdefine.ts");
-/* harmony import */ var _lapplive2dmanager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lapplive2dmanager */ "./Sample/TypeScript/Demo/src/lapplive2dmanager.ts");
-/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lappdelegate */ "./Sample/TypeScript/Demo/src/lappdelegate.ts");
-/* harmony import */ var _lappsprite__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lappsprite */ "./Sample/TypeScript/Demo/src/lappsprite.ts");
-/* harmony import */ var _lapppal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./lapppal */ "./Sample/TypeScript/Demo/src/lapppal.ts");
+/* harmony import */ var _touchmanager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./touchmanager */ "./src/touchmanager.ts");
+/* harmony import */ var _lappdefine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lappdefine */ "./src/lappdefine.ts");
+/* harmony import */ var _lapplive2dmanager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lapplive2dmanager */ "./src/lapplive2dmanager.ts");
+/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lappdelegate */ "./src/lappdelegate.ts");
+/* harmony import */ var _lappsprite__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lappsprite */ "./src/lappsprite.ts");
+/* harmony import */ var _lapppal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./lapppal */ "./src/lapppal.ts");
 /*
 * Copyright(c) Live2D Inc. All rights reserved.
 *
@@ -13150,16 +13150,16 @@ var LAppView = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./Sample/TypeScript/Demo/src/main.ts":
+/***/ "./src/main.ts":
 /*!********************************************!*\
-  !*** ./Sample/TypeScript/Demo/src/main.ts ***!
+  !*** ./src/main.ts ***!
   \********************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lappdelegate */ "./Sample/TypeScript/Demo/src/lappdelegate.ts");
+/* harmony import */ var _lappdelegate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lappdelegate */ "./src/lappdelegate.ts");
 /*
 * Copyright(c) Live2D Inc. All rights reserved.
 *
@@ -13185,9 +13185,9 @@ window.onbeforeunload = function () {
 
 /***/ }),
 
-/***/ "./Sample/TypeScript/Demo/src/touchmanager.ts":
+/***/ "./src/touchmanager.ts":
 /*!****************************************************!*\
-  !*** ./Sample/TypeScript/Demo/src/touchmanager.ts ***!
+  !*** ./src/touchmanager.ts ***!
   \****************************************************/
 /*! exports provided: TouchManager */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
