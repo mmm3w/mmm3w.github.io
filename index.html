@@ -5,12 +5,14 @@
 <head>
     <meta charset="utf-8" />
     <title>なちょ猫だよ</title>
-    <meta name="viewport" content="width=1900">
 </head>
 
-<body>
+<body style="position: relative;">
+    <div style="position: fixed;right: 0;bottom: 0;">
+        画师：<a href="https://twitter.com/amsrntk3">甘城なつき</a>
+    </div>
     <!-- Canvas -->
-    <canvas id="SAMPLE">
+    <canvas id="SAMPLE" style="position: absolute;">
         このブラウザは
         <code>&lt;canvas&lt;</code>要素をサポートしていません。
     </canvas>
@@ -25,11 +27,12 @@
     <script src="./dist/index.js"></script>
 
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
         }
-        canvas{
+
+        canvas {
             display: block;
         }
     </style>
