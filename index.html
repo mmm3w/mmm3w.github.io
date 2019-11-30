@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+/*
+*	canvas小游戏--格子拼图
+*	v 1.3
+*   Mitsuki
+*
+*		闲来无事仿写的。。不要在意方法变量什么的
+*	命名，因为有些还是用原文的Orz
+*/
+  var BoardWidth = 4; //横向格子数
+  var BoardHeight = 4; //纵向格子数
+  var PieceWidth = 150;  //格子宽度
+  var PieceHeight = 150; //格子高度
+  var BgWidth = BoardWidth * PieceWidth; //底板背景宽度
+  var BgHeight = BoardHeight * PieceHeight; //底板背景高度
+  var exchangeTime = 200; //随机对换次数
+  //以下为鼠标点击时在canvas中的格子坐标
+  var Mx = 0;
+  var My = 0;
+  
+  var canvas; //canvas元素节点
+  var MoveCount;//移动步数计数器
+  var Pieces; //格子数组
+  var Num; //格子个数
+  var DrawingContext;
+  var mark; //空白格子所在的位置
+  var okP;  //记录已经在正确位置上的格子
+  
+  window.onload = function()
+  {
+		initGame();
+		
+  }
+  //格子类封装
+  function Cell(row,column,index,t)
+  {
+	  this.row = row; //行
+	  this.column = column; //列
+	  this.index = index; //位置
+	  this.t = t; //内容
+  }
+  
+  //初始化
+  function initGame(){
+	//创建canvas节点
+	canvas = document.getElementById("cvs");
+	if(!canvas || !canvas.getContext){
+	  alert("not support canvas");
+	  return;
+	}
+	
+	//数据初始化
+	canvas.width = BgWidth+160;
+	canvas.height = BgHeight;
+	DrawingContext = canvas.getContext("2d");
+	MoveCount = 0;
+	mark = 0;
+	okP = 0;
+	//开始新游戏
+	newGame();
+	
+	//以下是对鼠标事件的监听以及判断
+	canvas.onclick =function(e) 
+	{
+       var e = window.event || e;
+       var rect = this.getBoundingClientRect();
+       var mouseX =e.clientX - rect.left;//获取鼠标在canvsa中的坐标
+       var mouseY =e.clientY - rect.top;
+       Mx=Math.floor(mouseX/PieceWidth);
+       My=Math.floor(mouseY/PieceHeight);
+       var clickP = Mx + My * BoardWidth; //计算鼠标点的格子的编号
+	   //以下是四种可能移动的情况
+	   var AP = clickP - 1;
+		var BP = clickP + 1;
+		var CP = clickP - BoardHeight;
+		var DP = clickP + BoardHeight;
+		//排除格子相邻却不在同一行的情况
+		if(Mx == 0)
+		{	
+			AP = -2;
+		}
+		if(Mx == (BoardWidth-1))
+		{
+			BP = -2;
+		}
+		if(My == 0)
+		{
+			CP = -2;
+		}
+		if(My == (BoardHeight - 1))
+		{
+			DP = -2;
+		}
+		
+		//符合任何一种进行移动
+		//既符合空白格子在上下左右
+		
+		
+		if( AP==mark || BP==mark || CP==mark || DP==mark)
+		{
+		  movePiece(clickP);
+		  if(okP == BoardWidth * BoardHeight - 1)
+		  {
+		    Count();
+		    Pieces[mark].t = BoardWidth * BoardHeight;
+		    drawPiece(Pieces[mark]);
+	        alert("恭喜完成");
+		  }
+		}
+		if(mouseX <= BgWidth+160 && mouseX >= BgWidth+10 && mouseY <= 90 && mouseY >= 10)
+		{initGame();}
+	 }
+  }
+  
+  //新游戏方法
+  function newGame()
+  {
+	 MoveCount = 0;
+	 
+	 Pieces = new Array(BoardWidth * BoardHeight);
+	 //创建所有方块格子
+	 for(var i = 0; i < BoardWidth * BoardHeight - 1; i++)
+	 {
+        var row = parseInt(i/BoardWidth);
+		var column = i - row * BoardWidth;
+		Pieces[i] = new Cell(row, column, i, i+1);
+	 }
+	 //最后一格创建成白块
+	 Pieces[BoardWidth * BoardHeight - 1] = new Cell(BoardHeight - 1, BoardWidth - 1,  BoardWidth * BoardHeight - 1, -1);
+	 mark = BoardWidth * BoardHeight - 1;
+	 Num = Pieces.length; //记录格子数
+	 randExchange(); //随机打乱格子
+	 DrawingContext.clearRect(0, 0, BgWidth, BgHeight);//清除所有内容
+	 resBtn();
+	 Count();
+	 //以下不加网格线，可萌是因为更加美观吧。。。
+	 //drawBoard();//绘制网格线
+	 //绘制所有格子
+	 for(var i = 0; i < BoardWidth * BoardHeight; i++)
+	 {
+		if((Pieces[i].index + 1) == Pieces[i].t)
+		{
+			okP++;
+		}
+	 	drawPiece(Pieces[i]);
+	 }
+  }
+  
+  //绘制计数器
+  function Count()
+  {
+	  DrawingContext.clearRect(BgWidth+10, 100, 150, 80);
+	  roundedRect(BgWidth+10, 100, 150, 80, 10);
+	  DrawingContext.fillStyle = "black";
+	  DrawingContext.font = "36px serif";
+	  DrawingContext.textAlign = "center";
+	  DrawingContext.textBaseline = "middle";
+	  DrawingContext.fillText(MoveCount, BgWidth+10+150/2, 140);
+  }
+  
+  //绘制重置按钮
+  function resBtn()
+  {
+	  roundedRect(BgWidth+10, 10, 150, 80, 10);
+	  DrawingContext.fillStyle = "black";
+	  DrawingContext.font = "36px serif";
+	  DrawingContext.textAlign = "center";
+	  DrawingContext.textBaseline = "middle";
+	  DrawingContext.fillText("RESET", BgWidth+10+150/2, 50);
+	  
+  }
+  
+  //随机打乱方法
+  function randExchange()
+  {
+	  var i = 0;
+	  var temp1,temp2,temp3,temp4;
+	  for(i = 0; i < exchangeTime;)
+	  {
+		  var sum = BoardWidth * BoardHeight - 1;
+		  temp1 = parseInt(sum * Math.random());
+		  
+		  temp3 =  parseInt(temp1%BoardWidth);
+		  temp4 = parseInt(temp1/BoardWidth)
+		  var aP = temp1 - 1;
+		  var bP = temp1 + 1;
+		  var cP = temp1 - BoardHeight;
+		  var dP = temp1 + BoardHeight;
+		  //排除格子相邻却不在同一行的情况
+		  if(temp3 == 0)
+		  {
+			aP = -2;
+		  }
+		  if(temp3 == (BoardWidth-1))
+		  {
+			bP = -2;
+		  }
+		  
+		  if(temp4 == 0)
+		  {
+			cP = -2;
+		  }
+		  if(temp4 == (BoardHeight - 1))
+		  {
+			dP = -2;
+		  }
+			//alert(temp1+"/"+temp3+"/"+temp4+"/"+cP+"/"+dP);
+		  //为了保证最后一定能还原，选择与空格进行交换
+		  if( aP==mark || bP==mark || cP==mark || dP==mark)
+		  {
+		    //交换格子的位置
+		    temp2 = Pieces[temp1].column;
+		    Pieces[temp1].column = Pieces[mark].column;
+		    Pieces[mark].column = temp2;
+		  
+		    temp2 = Pieces[temp1].row;
+		    Pieces[temp1].row = Pieces[mark].row;
+		    Pieces[mark].row = temp2;
+		  
+		    temp2 = Pieces[temp1].t;
+		    Pieces[temp1].t = Pieces[mark].t;
+		    Pieces[mark].t = temp2;
+
+		  	mark = temp1;
+			i++;
+		  }
+	  }
+	  
+  }
+  
+  //绘制网格线
+  function drawBoard()
+  {
+	  DrawingContext.beginPath();
+	  
+	  //绘制竖直网格线
+	  for(var x = 0; x < BgWidth; x += PieceWidth)
+	  {
+		  DrawingContext.moveTo(0.5 + x, 0);
+		  DrawingContext.lineTo(0.5 + x, BgWidth)
+	  }
+	  //绘制水平网格线
+	  for(var y = 0; y < BgHeight; y += PieceHeight)
+	  {
+		  DrawingContext.moveTo(0, 0.5 + y);
+		  DrawingContext.lineTo(BgHeight, 0.5 + y);
+	  }
+	  
+	  //设定样式绘制到屏幕上
+	  DrawingContext.strokeStyle = "#f00";
+	  DrawingContext.stroke();
+  }
+  
+  //绘制格子
+  function drawPiece(p)
+  {
+
+	  var column = p.column;
+	  var row = p.row;
+	  var index = p.index;
+	  var t = p.t;
+	  var _row = parseInt(index/BoardWidth);
+	  var _column = index - _row * BoardWidth;
+	  var sy = _row * PieceWidth;
+	  var sx = _column * PieceHeight;
+	  var tx = sx + PieceWidth/2;
+	  var ty = sy + PieceHeight/2;
+	  roundedRect(sx,sy,PieceWidth,PieceHeight,5);
+	  if((index + 1) == t)
+	      DrawingContext.fillStyle = "red";
+	  else
+	      DrawingContext.fillStyle = "black";
+	  DrawingContext.font = "48px serif";
+	  DrawingContext.textAlign = "center";
+	  DrawingContext.textBaseline = "middle";
+	  if(t != -1)
+	    DrawingContext.fillText(t, tx, ty);
+  }
+  
+  // 封装的一个用于绘制圆角矩形的函数.
+  function roundedRect(x,y,width,height,radius){
+    DrawingContext.beginPath();
+    DrawingContext.moveTo(x,y+radius);
+    DrawingContext.lineTo(x,y+height-radius);
+    DrawingContext.quadraticCurveTo(x,y+height,x+radius,y+height);
+    DrawingContext.lineTo(x+width-radius,y+height);
+    DrawingContext.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);
+    DrawingContext.lineTo(x+width,y+radius);
+    DrawingContext.quadraticCurveTo(x+width,y,x+width-radius,y);
+    DrawingContext.lineTo(x+radius,y);
+    DrawingContext.quadraticCurveTo(x,y,x,y+radius);
+    DrawingContext.stroke();
+  }
+  
+  //响应鼠标事件进行格子对调，并进行重绘
+  function movePiece(p)
+  {
+	  var temp;
+	  
+	  if(Pieces[mark].t == BoardWidth * BoardHeight) return;
+	  
+	  //与空白格子对调内容
+	  temp = Pieces[p].column;
+	  Pieces[p].column = Pieces[mark].column;
+	  Pieces[mark].column = temp;
+	  
+	  temp = Pieces[p].row;
+	  Pieces[p].row = Pieces[mark].row;
+	  Pieces[mark].row = temp;
+		  
+	  temp = Pieces[p].t;
+	  Pieces[p].t = Pieces[mark].t;
+	  Pieces[mark].t = temp; 
+	  
+	  mark = p;
+	  
+	  //以下为重新绘制
+	  DrawingContext.clearRect(0, 0, BgWidth, BgHeight);
+	  okP = 0;
+	  for(var i = 0; i < BoardWidth * BoardHeight; i++)
+	  {
+		if((Pieces[i].index + 1) == Pieces[i].t)
+		{
+			okP++;
+		}
+	 	drawPiece(Pieces[i]);
+	  }
+	  MoveCount++;
+	  Count();
+  }
+  
+</script>
+<style></style>
+</head>
+<body>
+<div style="width:600px; margin:0 auto; height:600px;">
+  <canvas id="cvs"> 您的浏览器不支持 HTML5 canvas 标签。 </canvas>
+</div>
+</body>
+</html>
