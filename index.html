@@ -1,51 +1,22 @@
 <!DOCTYPE html>
 
-<html lang="ja">
-
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title>なちょ猫だよ</title>
     <meta name="viewport" content="width=1900">
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
 </head>
-
-<body style="position: relative;">
-    <div style="position: fixed;right: 0;bottom: 0;">
-        画师：<a href="https://twitter.com/amsrntk3">甘城なつき</a>
-    </div>
+<body>
     <!-- Canvas -->
-    <canvas id="SAMPLE" style="position: absolute;">
-        このブラウザは
-        <code>&lt;canvas&lt;</code>要素をサポートしていません。
+    <canvas id="SAMPLE" width="1900" height="1000">
     </canvas>
 
-    <!-- Promise-polyfill -->
-    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js "> </script>
-
+    <script src = "https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js "> </script>
+    
     <!-- Live2DCubismCore -->
-    <script src="./Core/live2dcubismcore.min.js"></script>
+    <script src = "./Live2DFrameWork/Core/live2dcubismcore.min.js"></script>
 
     <!-- User's Script -->
-    <script src="./dist/index.js"></script>
-
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        canvas {
-            display: block;
-        }
-    </style>
-    <script>
-        var canvas = document.getElementById("SAMPLE");
-        window.onresize = resizeCanvas;
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();   
-    </script>
+    <script src = "./dist/index.js"></script>
 </body>
-
 </html>
