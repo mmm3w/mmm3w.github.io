@@ -245,7 +245,6 @@ export class Live2DModel extends CubismUserModel {
     public getLipSyncIds(): CsmVector<CubismIdHandle> {
         return this._lipSyncIds
     }
-
     /*=================================================================================*/
     /**
      * 重建渲染器

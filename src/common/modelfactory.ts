@@ -18,7 +18,7 @@ export namespace ModelFactory {
      * @param dir 存放model3.json的文件夹路径
      * @param fileName 
      */
-    export function loadModel(gl: any, model: Live2DModel, dir: string,
+    export function loadModel(gl: WebGLRenderingContext, model: Live2DModel, dir: string,
         fileName: string, loadTextureCallback: (model: Live2DModel) => void) {
         model.modelHomeDir = dir
 

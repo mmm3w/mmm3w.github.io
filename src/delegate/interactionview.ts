@@ -61,7 +61,7 @@ export class InteractionView {
     /**
     * 释放
     */
-    public release(gl: any): void {
+    public release(gl: WebGLRenderingContext): void {
         this._viewMatrix = null
         // this._touchManager = null;
         this._deviceToScreen = null
@@ -70,7 +70,7 @@ export class InteractionView {
         this._programId = null
     }
 
-    public render(gl: any, callback: any): void {
+    public render(gl: WebGLRenderingContext, callback: any): void {
         gl.useProgram(this._programId);
         gl.flush();
         callback() //此处回调更新模型

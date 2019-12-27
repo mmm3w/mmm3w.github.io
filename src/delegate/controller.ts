@@ -14,7 +14,6 @@ export class Controller {
         this._viewMatrix = new CsmCubismMatrix44()
     }
 
-
     public onUpdate(model: Live2DModel, canvas: HTMLCanvasElement, frameBuffer: WebGLFramebuffer) {
         let projection: CsmCubismMatrix44 = new CsmCubismMatrix44()
         projection.scale(1.0, canvas.width / canvas.height)
@@ -26,5 +25,9 @@ export class Controller {
         projection = saveProjection.clone()
         model.updateMyModel()
         model.draw(canvas, frameBuffer, projection)
+    }
+
+    public release(): void {
+        this._viewMatrix = null;
     }
 }

@@ -12,7 +12,7 @@ let instance: AppDelegate = null
 export class AppDelegate {
 
     private _canvas: HTMLCanvasElement
-    private _webgl: any
+    private _webgl: WebGLRenderingContext
     private _frameBuffer: WebGLFramebuffer
 
     private _cubismOption: CsmOption
@@ -38,9 +38,20 @@ export class AppDelegate {
     }
 
     //释放资源
-    public static release(): void {
+    public release(): void {
+        this._resourcesManager.releaseTexturesWithGL(this._webgl)
+        this._resourcesManager.releaseAllModel()
+        this._resourcesManager = null;
 
-        // instance = null
+        this._controller.release()
+        this._controller = null
+
+        this._view.release(this._webgl)
+        this._view = null
+
+        CsmCubismFramework.dispose();
+
+        instance = null
     }
 
     //初始化
@@ -98,13 +109,12 @@ export class AppDelegate {
             this._webgl.enable(this._webgl.BLEND)
             this._webgl.blendFunc(this._webgl.SRC_ALPHA, this._webgl.ONE_MINUS_SRC_ALPHA)
             this._view.render(this._webgl, () => {
-                this._controller.onUpdate(this._resourcesManager.getCurrentModel(),this._canvas, this._frameBuffer)
+                this._controller.onUpdate(this._resourcesManager.getCurrentModel(), this._canvas, this._frameBuffer)
             })
             requestAnimationFrame(loop)
         }
         loop()
     }
-
 
     public createShader(): WebGLProgram {
         // バーテックスシェーダーのコンパイル

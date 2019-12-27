@@ -20,5 +20,5 @@ main()
  * 終了時の処理
  */
 window.onbeforeunload = () => {
-    // LAppDelegate.releaseInstance()
+    AppDelegate.getInstance().release()
 }
