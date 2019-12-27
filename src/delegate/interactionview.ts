@@ -1,10 +1,11 @@
-import { Live2DCubismFramework as cubismMatrix44 } from "../../Live2DFramework/Framework/math/cubismmatrix44";
+import { Live2DCubismFramework as cubismMatrix44 } from "../../live2d/framework/math/cubismmatrix44";
 import CsmCubismMatrix44 = cubismMatrix44.CubismMatrix44;
-import { Live2DCubismFramework as cubismviewmatrix } from "../../Live2DFramework/Framework/math/cubismviewmatrix";
+import { Live2DCubismFramework as cubismviewmatrix } from "../../live2d/framework/math/cubismviewmatrix";
 import CsmCubismViewMatrix = cubismviewmatrix.CubismViewMatrix;
 
 import { ConstantsDefine } from "../common/constants"
 import { Utils } from "../common/utils";
+import { AppDelegate } from "./appdelegate";
 
 /**
  *  只负责渲染图像
@@ -51,9 +52,9 @@ export class InteractionView {
         )
     }
 
-    public initializeSprite(gl: any): void {
+    public initializeSprite(): void {
         if (this._programId == null) {
-            this._programId = Utils.createShader(gl)
+            this._programId = AppDelegate.getInstance().createShader()
         }
     }
 
@@ -71,13 +72,7 @@ export class InteractionView {
 
     public render(gl: any, callback: any): void {
         gl.useProgram(this._programId);
-
         gl.flush();
-
-
         callback() //此处回调更新模型
-        // let live2DManager: LAppLive2DManager = LAppLive2DManager.getInstance();
-
-        // live2DManager.onUpdate();
     }
 }

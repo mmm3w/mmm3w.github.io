@@ -6,7 +6,7 @@ module.exports = {
     entry: './src/main.ts',
     output: {
         filename : 'index.js',
-        path: path.join(__dirname, 'dist/')
+        path: path.join(__dirname, '')
     },
     module: {
         rules: [{ test: /\.ts$/, use: 'ts-loader' }]

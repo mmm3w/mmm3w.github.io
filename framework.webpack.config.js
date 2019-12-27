@@ -4,9 +4,9 @@ var glob = require('glob');
 
 var entries = {};
 
-glob.sync("./Live2DFrameWork/Framework/**/*.ts").map(
+glob.sync("./live2d/Framework/**/*.ts").map(
     function (file) {
-        const regEx = new RegExp(`./Live2DFrameWork/Framework`);
+        const regEx = new RegExp(`./live2d/Framework`);
         const key = file.replace(regEx, '').replace('.ts', '');
         entries[key] = file;
     }
@@ -17,7 +17,7 @@ module.exports = {
     entry: entries,
     output: {
         filename: '[name].js',
-        path: path.join(__dirname, 'dist/Framework/src')
+        path: path.join(__dirname, 'dist/framework/src')
     },
     module: {
         rules: [{ test: /\.ts$/, use: 'ts-loader' }]

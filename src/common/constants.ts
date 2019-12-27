@@ -1,4 +1,5 @@
-import { LogLevel } from "../../live2dframework/Framework/live2dcubismframework"
+import { LogLevel } from "../../live2d/framework/live2dcubismframework"
+
 /**
  * 常量定义
  */
