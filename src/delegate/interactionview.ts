@@ -5,18 +5,26 @@ import CsmCubismViewMatrix = cubismviewmatrix.CubismViewMatrix;
 
 import { ConstantsDefine } from "../common/constants"
 import { Utils } from "../common/utils";
-import { AppDelegate } from "./appdelegate";
 
 /**
- *  只负责渲染图像
+ *  负责渲染图像
  */
 export class InteractionView {
+    private _canvas: HTMLCanvasElement
+    private _webgl: WebGLRenderingContext
+    private _frameBuffer: WebGLFramebuffer
 
     private _viewMatrix = new CsmCubismViewMatrix() //viewMatrix
     private _deviceToScreen: CsmCubismMatrix44    // 设备屏幕矩阵
     private _programId: WebGLProgram              // shader ID
 
+    private _onResizeCallback: () => void
+
     constructor() {
+        this._canvas = null
+        this._webgl = null
+        this._frameBuffer = null
+
         this._programId = null;
         // 用于将设备坐标转换为屏幕坐标
         this._deviceToScreen = new CsmCubismMatrix44()
@@ -25,9 +33,43 @@ export class InteractionView {
         this._viewMatrix = new CsmCubismViewMatrix()
     }
 
-    //初始化矩阵
-    public initialize(width: number, height: number): void {
-        let ratio: number = height / width
+    public setResizeCallback(onResizeCallback: () => void) {
+        //页面发生缩放通知更新模型的渲染器
+        this._onResizeCallback = onResizeCallback
+    }
+
+
+    public initialize(canvas: HTMLCanvasElement) {
+        //初始化画布和webgl
+        this._canvas = <HTMLCanvasElement>document.getElementById(ConstantsDefine.CanvasID)
+        if (!canvas) {
+            alert("Canvas initialize failed")
+            this._canvas = null
+            return false
+        }
+        this._canvas = canvas
+        this._canvas.width = document.defaultView.innerWidth
+        this._canvas.height = document.defaultView.innerHeight
+
+        this._webgl = this._canvas.getContext("webgl") //|| this._canvas.getContext("experimental-webgl")
+        if (!this._webgl) {
+            alert("WebGL initialize failed")
+            this._webgl = null
+            return false
+        }
+
+        if (!this._frameBuffer) {
+            this._frameBuffer = this._webgl.getParameter(this._webgl.FRAMEBUFFER_BINDING)
+        }
+
+        this._webgl.enable(this._webgl.BLEND)
+        this._webgl.blendFunc(this._webgl.SRC_ALPHA, this._webgl.ONE_MINUS_SRC_ALPHA)
+
+        let width: number = this._canvas.width;
+        let height: number = this._canvas.height;
+
+        //初始化矩阵
+        let ratio: number = 1
         let left: number = ConstantsDefine.ViewLogicalLeft
         let right: number = ConstantsDefine.ViewLogicalRight
         let bottom: number = -ratio
@@ -39,40 +81,73 @@ export class InteractionView {
         this._deviceToScreen.scaleRelative(screenW / width, -screenW / width)
         this._deviceToScreen.translateRelative(-width * 0.5, -height * 0.5)
 
-        // 表示範囲の設定
+        // 显示范围设定
         this._viewMatrix.setMaxScale(ConstantsDefine.ViewMaxScale) // 限界拡張率
         this._viewMatrix.setMinScale(ConstantsDefine.ViewMinScale) // 限界縮小率
 
-        // 表示できる最大範囲
+        // 显示最大范围
         this._viewMatrix.setMaxScreenRect(
             ConstantsDefine.ViewLogicalMaxLeft,
             ConstantsDefine.ViewLogicalMaxRight,
             ConstantsDefine.ViewLogicalMaxBottom,
             ConstantsDefine.ViewLogicalMaxTop
         )
+
+        this.createShader()
+
+        document.body.onresize = () => {
+            this._canvas.width = document.defaultView.innerWidth
+            this._canvas.height = document.defaultView.innerHeight
+            if (this._onResizeCallback) this._onResizeCallback()
+        }
+        return true
     }
 
-    public initializeSprite(): void {
+    public createShader(): void {
         if (this._programId == null) {
-            this._programId = AppDelegate.getInstance().createShader()
+            this._programId = Utils.createShader(this._webgl)
         }
     }
 
     /**
     * 释放
     */
-    public release(gl: WebGLRenderingContext): void {
+    public release(): void {
         this._viewMatrix = null
         // this._touchManager = null;
         this._deviceToScreen = null
 
-        gl.deleteProgram(this._programId)
+        this._webgl.deleteProgram(this._programId)
         this._programId = null
+
+        this._frameBuffer = null
+        this._webgl = null
+        this._canvas = null
     }
 
-    public render(gl: WebGLRenderingContext, callback: any): void {
-        gl.useProgram(this._programId);
-        gl.flush();
-        callback() //此处回调更新模型
+    //gl context provider
+    public getContext() {
+        return this._webgl
     }
+
+    public getCanvas() {
+        return this._canvas
+    }
+
+    public getFrameBuffer() {
+        return this._frameBuffer
+    }
+
+    public render(): void {
+        this._webgl.clearColor(0.0, 0.0, 0.0, 0.0)
+        this._webgl.enable(this._webgl.DEPTH_TEST)
+        this._webgl.depthFunc(this._webgl.LEQUAL)
+        this._webgl.clear(this._webgl.COLOR_BUFFER_BIT | this._webgl.DEPTH_BUFFER_BIT)
+        this._webgl.clearDepth(1.0)
+        this._webgl.enable(this._webgl.BLEND)
+        this._webgl.blendFunc(this._webgl.SRC_ALPHA, this._webgl.ONE_MINUS_SRC_ALPHA)
+        this._webgl.useProgram(this._programId);
+        this._webgl.flush();
+    }
+
 }

@@ -258,7 +258,7 @@ export class Live2DModel extends CubismUserModel {
     /**
      * 更新
      */
-    public updateMyModel(): void {
+    public updateModel(): void {
         if (this.state != LoadStep.CompleteSetup) return
 
         const deltaTimeSeconds: number = FrameDeltaTime.getDeltaTime()
@@ -481,20 +481,6 @@ export class Live2DModel extends CubismUserModel {
     }
 
     /**
-    * 模型绘制处理。通过View-Projection矩阵绘制模型。
-    */
-    public draw(canvas: HTMLCanvasElement, frameBuffer: WebGLFramebuffer, matrix: CubismMatrix44): void {
-        if (this._model == null) return
-
-        // 各项工作结束后
-        if (this.state == LoadStep.CompleteSetup) {
-            matrix.multiplyByMatrix(this._modelMatrix)
-            this.getRenderer().setMvpMatrix(matrix)
-            this.doDraw(canvas, frameBuffer)
-        }
-    }
-
-    /**
     * 释放动作数据资源
     */
     public releaseMotions(): void {
@@ -514,23 +500,5 @@ export class Live2DModel extends CubismUserModel {
             return this.modelHomeDir + source
         else
             return source
-    }
-
-    /**
-    * 模型绘制处理。通过View-Projection矩阵绘制模型。
-    */
-    private doDraw(canvas: HTMLCanvasElement, frameBuffer: WebGLFramebuffer): void {
-        if (this._model == null) return
-
-        // 依照canvas的大小
-        let viewport: number[] = [
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        ]
-
-        this.getRenderer().setRenderState(frameBuffer, viewport)
-        this.getRenderer().drawModel()
     }
 }

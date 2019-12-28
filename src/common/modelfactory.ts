@@ -81,7 +81,6 @@ export namespace ModelFactory {
 
         // Physics
         let loadCubismPhysics = () => {
-
             model.state = LoadStep.LoadPhysics
             if (model.getPhysicsFileName() != "") {
                 fetch(model.getPhysicsFileName(true))
@@ -238,6 +237,7 @@ export namespace ModelFactory {
                 loadTextureCallback(model)
                 model.getRenderer().startUp(gl)
             }
+
         }
     }
 
