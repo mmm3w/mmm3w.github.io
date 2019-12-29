@@ -274,12 +274,11 @@ export class Live2DModel extends CubismUserModel {
 
         //--------------------------------------------------------------------------
         this._model.loadParameters()   // 加载上次保存的状态
-        if (this._motionManager.isFinished()) {
+        if (!this._motionManager.isFinished()) {
+            motionUpdated = this._motionManager.updateMotion(this._model, deltaTimeSeconds)    // 动作更新
+        } else {
             // 没有播放动作时、随机播放待机动作
             this.startRandomMotion(ConstantsDefine.MotionGroupIdle, ConstantsDefine.PriorityIdle)
-        }
-        else {
-            motionUpdated = this._motionManager.updateMotion(this._model, deltaTimeSeconds)    // 动作更新
         }
         this._model.saveParameters() // 保存状态
         //--------------------------------------------------------------------------
@@ -398,7 +397,7 @@ export class Live2DModel extends CubismUserModel {
 
     /**
      * 开始一个随机的动作
-     * @param group 动作名
+     * @param group 动作组
      * @param priority 优先度
      * @return 开始的东西的id。其他动作听过isFinished()进行判断是否结束。为开始时是[-1]
      */

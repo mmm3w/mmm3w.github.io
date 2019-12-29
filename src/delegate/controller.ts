@@ -5,7 +5,7 @@ import CsmCubismMatrix44 = cubismmatrix44.CubismMatrix44
 
 
 import { Live2DModel } from "../model/live2dmodel";
-import { TouchManager } from "../delegate/touchmanager"
+import { TouchManager } from "../model/touchmanager";
 import { LoadStep } from "../common/loadstep";
 
 export class Controller {
@@ -17,6 +17,9 @@ export class Controller {
 
     constructor() {
         this._viewMatrix = new CsmCubismMatrix44()
+        this._viewMatrix.scale(4, 4)
+        this._viewMatrix.translateY(-1)
+
         this._touch = new TouchManager()
 
         this._renderUpdateMark = true
@@ -30,26 +33,27 @@ export class Controller {
 
             if (this._renderUpdateMark) {
                 // canvas大小发生改变时重新设置画布矩阵
+
+                let projection: CsmCubismMatrix44 = new CsmCubismMatrix44()
+
+                projection.scale(canvas.height / canvas.width, 1.0)
+                if (this._viewMatrix != null) {
+                    projection.multiplyByMatrix(this._viewMatrix)
+                }
+                projection.multiplyByMatrix(model.getModelMatrix())
+                model.getRenderer().setMvpMatrix(projection)
+
                 let viewport: number[] = [
                     0,
                     0,
                     canvas.width,
                     canvas.height
                 ]
-                let projection: CsmCubismMatrix44 = new CsmCubismMatrix44()
-                projection.scale(1.0, canvas.width / canvas.height)
-                if (this._viewMatrix != null) {
-                    projection.multiplyByMatrix(this._viewMatrix)
-                }
-                const saveProjection: CsmCubismMatrix44 = projection.clone()
-                projection = saveProjection.clone()
-
-                projection.multiplyByMatrix(model.getModelMatrix())
-                model.getRenderer().setMvpMatrix(projection)
                 model.getRenderer().setRenderState(frameBuffer, viewport)
+
                 this._renderUpdateMark = false
             }
-            
+
             model.getRenderer().drawModel()
         }
     }

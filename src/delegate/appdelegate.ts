@@ -62,6 +62,8 @@ export class AppDelegate {
         })
         //更新时间
         Utils.FrameDeltaTime.updateTime()
+
+
         return true
     }
 

@@ -14,7 +14,9 @@ export class InteractionView {
     private _webgl: WebGLRenderingContext
     private _frameBuffer: WebGLFramebuffer
 
-    private _viewMatrix = new CsmCubismViewMatrix() //viewMatrix
+    private _bgImage: HTMLImageElement
+
+    private _viewMatrix = new CsmCubismViewMatrix() //viewMatrix,响应移动等事件
     private _deviceToScreen: CsmCubismMatrix44    // 设备屏幕矩阵
     private _programId: WebGLProgram              // shader ID
 
@@ -40,6 +42,11 @@ export class InteractionView {
 
 
     public initialize(canvas: HTMLCanvasElement) {
+        this._bgImage = <HTMLImageElement>document.getElementById("bgImage")
+        if (this._bgImage) {
+            this._bgImage.width = document.defaultView.innerWidth
+            this._bgImage.height = document.defaultView.innerHeight
+        }
         //初始化画布和webgl
         this._canvas = <HTMLCanvasElement>document.getElementById(ConstantsDefine.CanvasID)
         if (!canvas) {
@@ -48,7 +55,7 @@ export class InteractionView {
             return false
         }
         this._canvas = canvas
-        this._canvas.width = document.defaultView.innerWidth
+        this._canvas.width = document.defaultView.innerWidth / 2
         this._canvas.height = document.defaultView.innerHeight
 
         this._webgl = this._canvas.getContext("webgl") //|| this._canvas.getContext("experimental-webgl")
@@ -65,39 +72,43 @@ export class InteractionView {
         this._webgl.enable(this._webgl.BLEND)
         this._webgl.blendFunc(this._webgl.SRC_ALPHA, this._webgl.ONE_MINUS_SRC_ALPHA)
 
-        let width: number = this._canvas.width;
-        let height: number = this._canvas.height;
+        // let width: number = this._canvas.width;
+        // let height: number = this._canvas.height;
 
-        //初始化矩阵
-        let ratio: number = 1
-        let left: number = ConstantsDefine.ViewLogicalLeft
-        let right: number = ConstantsDefine.ViewLogicalRight
-        let bottom: number = -ratio
-        let top: number = ratio
+        // //初始化矩阵
+        // let ratio: number =  this._canvas.width/ this._canvas.height
+        // let left: number = ConstantsDefine.ViewLogicalLeft
+        // let right: number = ConstantsDefine.ViewLogicalRight
+        // let bottom: number = -ratio
+        // let top: number = ratio
 
-        this._viewMatrix.setScreenRect(left, right, bottom, top)   // 设备对应的画面范围
+        // this._viewMatrix.setScreenRect(left, right, bottom, top)   // 设备对应的画面范围
 
-        let screenW: number = Math.abs(left - right)
-        this._deviceToScreen.scaleRelative(screenW / width, -screenW / width)
-        this._deviceToScreen.translateRelative(-width * 0.5, -height * 0.5)
+        // let screenW: number = Math.abs(left - right)
+        // this._deviceToScreen.scaleRelative(screenW / width, -screenW / width)
+        // this._deviceToScreen.translateRelative(-width * 0.5, -height * 0.5)
 
-        // 显示范围设定
-        this._viewMatrix.setMaxScale(ConstantsDefine.ViewMaxScale) // 限界拡張率
-        this._viewMatrix.setMinScale(ConstantsDefine.ViewMinScale) // 限界縮小率
+        // // 显示范围设定
+        // this._viewMatrix.setMaxScale(ConstantsDefine.ViewMaxScale) // 限界拡張率
+        // this._viewMatrix.setMinScale(ConstantsDefine.ViewMinScale) // 限界縮小率
 
-        // 显示最大范围
-        this._viewMatrix.setMaxScreenRect(
-            ConstantsDefine.ViewLogicalMaxLeft,
-            ConstantsDefine.ViewLogicalMaxRight,
-            ConstantsDefine.ViewLogicalMaxBottom,
-            ConstantsDefine.ViewLogicalMaxTop
-        )
+        // // 显示最大范围
+        // this._viewMatrix.setMaxScreenRect(
+        //     ConstantsDefine.ViewLogicalMaxLeft,
+        //     ConstantsDefine.ViewLogicalMaxRight,
+        //     ConstantsDefine.ViewLogicalMaxBottom,
+        //     ConstantsDefine.ViewLogicalMaxTop
+        // )
 
         this.createShader()
 
         document.body.onresize = () => {
-            this._canvas.width = document.defaultView.innerWidth
+            this._canvas.width = document.defaultView.innerWidth / 2
             this._canvas.height = document.defaultView.innerHeight
+            if (this._bgImage) {
+                this._bgImage.width = document.defaultView.innerWidth
+                this._bgImage.height = document.defaultView.innerHeight
+            }
             if (this._onResizeCallback) this._onResizeCallback()
         }
         return true

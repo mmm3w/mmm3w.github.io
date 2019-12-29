@@ -8,7 +8,6 @@ import { Live2DModel } from "../model/live2dmodel";
 import { ConstantsDefine } from "../common/constants";
 import { Utils } from "../common/utils";
 import { ModelFactory } from "../common/ModelFactory";
-import { LoadStep } from "../common/loadstep";
 
 export class ResourcesManager {
     private _textures: CsmVector<TextureInfo>;
