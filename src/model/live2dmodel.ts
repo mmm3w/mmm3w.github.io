@@ -58,6 +58,7 @@ export class Live2DModel extends CubismUserModel {
     private _motions: CsmMap<string, ACubismMotion> // 获取的动作列表
 
     private _userTimeSeconds: number   // 时间累计值[秒]
+    private _lastChanceMotion: number //上次特殊待机动作的时间
 
     private _idParamAngleX: CubismIdHandle     // 参数ID: ParamAngleX
     private _idParamAngleY: CubismIdHandle     // 参数ID: ParamAngleY
@@ -84,13 +85,13 @@ export class Live2DModel extends CubismUserModel {
         this.textureCount = 0
 
         this._userTimeSeconds = 0.0
+        this._lastChanceMotion = Date.now()
 
         this._idParamAngleX = CubismFramework.getIdManager().getId(CubismDefaultParameterId.ParamAngleX)
         this._idParamAngleY = CubismFramework.getIdManager().getId(CubismDefaultParameterId.ParamAngleY)
         this._idParamAngleZ = CubismFramework.getIdManager().getId(CubismDefaultParameterId.ParamAngleZ)
         this._idParamBodyAngleX = CubismFramework.getIdManager().getId(CubismDefaultParameterId.ParamBodyAngleX)
         this._idParamBreath = CubismFramework.getIdManager().getId(CubismDefaultParameterId.ParamBreath)
-
 
         this._idParamEyeBallX = CubismFramework.getIdManager().getId(CubismDefaultParameterId.ParamEyeBallX)
         this._idParamEyeBallY = CubismFramework.getIdManager().getId(CubismDefaultParameterId.ParamEyeBallY)
@@ -278,7 +279,7 @@ export class Live2DModel extends CubismUserModel {
             motionUpdated = this._motionManager.updateMotion(this._model, deltaTimeSeconds)    // 动作更新
         } else {
             // 没有播放动作时、随机播放待机动作
-            this.startRandomMotion(ConstantsDefine.MotionGroupIdle, ConstantsDefine.PriorityIdle)
+            this.startRandomMotion(ConstantsDefine.MotionGroupStandby, ConstantsDefine.PriorityIdle)
         }
         this._model.saveParameters() // 保存状态
         //--------------------------------------------------------------------------
@@ -402,11 +403,22 @@ export class Live2DModel extends CubismUserModel {
      * @return 开始的东西的id。其他动作听过isFinished()进行判断是否结束。为开始时是[-1]
      */
     public startRandomMotion(group: string, priority: number): CubismMotionQueueEntryHandle {
-        if (this._modelSetting.getMotionCount(group) == 0) {
+        let groupName: string
+        let currentTime = Date.now()
+        if (currentTime - this._lastChanceMotion > Utils.chanceMotionTimeRange()) {
+            groupName = ConstantsDefine.MotionGroupChance
+            this._lastChanceMotion = currentTime
+            console.log("sp");
+        } else {
+            groupName = ConstantsDefine.MotionGroupStandby
+            console.log("normal");
+        }
+
+        if (this._modelSetting.getMotionCount(groupName) == 0) {
             return InvalidMotionQueueEntryHandleValue
         }
-        let no: number = Math.floor(Math.random() * this._modelSetting.getMotionCount(group))
-        return this.startMotion(group, no, priority)
+        let no: number = Math.floor(Math.random() * this._modelSetting.getMotionCount(groupName))
+        return this.startMotion(groupName, no, priority)
     }
 
     /**

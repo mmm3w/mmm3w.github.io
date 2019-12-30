@@ -5,6 +5,7 @@ import CsmVectorIterator = csmvector.iterator;
 import { TextureInfo } from "../model/textureinfo"
 import { LoadStep } from "./loadstep"
 import { Live2DModel } from "../model/live2dmodel";
+import { ConstantsDefine } from "./constants";
 
 export namespace Utils {
     export function printLog(format: string, ...args: any[]): void {
@@ -17,6 +18,10 @@ export namespace Utils {
 
     export function printMessage(message: string): void {
         printLog(message)
+    }
+
+    export function chanceMotionTimeRange(): number {
+        return Math.random() * ConstantsDefine.ChanceMotionTimeOffset + ConstantsDefine.ChanceMotionTimeBase
     }
 
     export class FrameDeltaTime {

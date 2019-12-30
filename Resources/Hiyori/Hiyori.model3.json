@@ -10,7 +10,7 @@
 		"Pose": "Hiyori.pose3.json",
 		"UserData": "Hiyori.userdata3.json",
 		"Motions": {
-			"Idle": [
+			"Standby": [
 				{
 					"File": "motions/Hiyori_m01.motion3.json",
 					"FadeInTime": 0.5,
@@ -26,6 +26,20 @@
 					"FadeInTime": 0.5,
 					"FadeOutTime": 0.5
 				},
+				{
+					"File": "motions/Hiyori_m04.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				}
+			],
+			"Chance": [
+				{
+					"File": "motions/Hiyori_m10.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				}
+			],
+			"Tap": [
 				{
 					"File": "motions/Hiyori_m05.motion3.json",
 					"FadeInTime": 0.5,
@@ -48,18 +62,6 @@
 				},
 				{
 					"File": "motions/Hiyori_m09.motion3.json",
-					"FadeInTime": 0.5,
-					"FadeOutTime": 0.5
-				},
-				{
-					"File": "motions/Hiyori_m10.motion3.json",
-					"FadeInTime": 0.5,
-					"FadeOutTime": 0.5
-				}
-			],
-			"TapBody": [
-				{
-					"File": "motions/Hiyori_m04.motion3.json",
 					"FadeInTime": 0.5,
 					"FadeOutTime": 0.5
 				}
