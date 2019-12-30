@@ -35,6 +35,22 @@ export class InteractionView {
         this._viewMatrix = new CsmCubismViewMatrix()
     }
 
+    /**
+    * 释放
+    */
+    public release(): void {
+        this._viewMatrix = null
+        // this._touchManager = null;
+        this._deviceToScreen = null
+
+        this._webgl.deleteProgram(this._programId)
+        this._programId = null
+
+        this._frameBuffer = null
+        this._webgl = null
+        this._canvas = null
+    }
+
     public setResizeCallback(onResizeCallback: () => void) {
         //页面发生缩放通知更新模型的渲染器
         this._onResizeCallback = onResizeCallback
@@ -72,33 +88,33 @@ export class InteractionView {
         this._webgl.enable(this._webgl.BLEND)
         this._webgl.blendFunc(this._webgl.SRC_ALPHA, this._webgl.ONE_MINUS_SRC_ALPHA)
 
-        // let width: number = this._canvas.width;
-        // let height: number = this._canvas.height;
+        let width: number = this._canvas.width;
+        let height: number = this._canvas.height;
 
-        // //初始化矩阵
-        // let ratio: number =  this._canvas.width/ this._canvas.height
-        // let left: number = ConstantsDefine.ViewLogicalLeft
-        // let right: number = ConstantsDefine.ViewLogicalRight
-        // let bottom: number = -ratio
-        // let top: number = ratio
+        //初始化矩阵
+        let ratio: number = this._canvas.width / this._canvas.height
+        let left: number = ConstantsDefine.ViewLogicalLeft
+        let right: number = ConstantsDefine.ViewLogicalRight
+        let bottom: number = -ratio
+        let top: number = ratio
 
-        // this._viewMatrix.setScreenRect(left, right, bottom, top)   // 设备对应的画面范围
+        this._viewMatrix.setScreenRect(left, right, bottom, top)   // 设备对应的画面范围
 
-        // let screenW: number = Math.abs(left - right)
-        // this._deviceToScreen.scaleRelative(screenW / width, -screenW / width)
-        // this._deviceToScreen.translateRelative(-width * 0.5, -height * 0.5)
+        let screenW: number = Math.abs(left - right)
+        this._deviceToScreen.scaleRelative(screenW / width, -screenW / width)
+        this._deviceToScreen.translateRelative(-width * 0.5, -height * 0.5)
 
-        // // 显示范围设定
-        // this._viewMatrix.setMaxScale(ConstantsDefine.ViewMaxScale) // 限界拡張率
-        // this._viewMatrix.setMinScale(ConstantsDefine.ViewMinScale) // 限界縮小率
+        // 显示范围设定
+        this._viewMatrix.setMaxScale(ConstantsDefine.ViewMaxScale) // 限界拡張率
+        this._viewMatrix.setMinScale(ConstantsDefine.ViewMinScale) // 限界縮小率
 
-        // // 显示最大范围
-        // this._viewMatrix.setMaxScreenRect(
-        //     ConstantsDefine.ViewLogicalMaxLeft,
-        //     ConstantsDefine.ViewLogicalMaxRight,
-        //     ConstantsDefine.ViewLogicalMaxBottom,
-        //     ConstantsDefine.ViewLogicalMaxTop
-        // )
+        // 显示最大范围
+        this._viewMatrix.setMaxScreenRect(
+            ConstantsDefine.ViewLogicalMaxLeft,
+            ConstantsDefine.ViewLogicalMaxRight,
+            ConstantsDefine.ViewLogicalMaxBottom,
+            ConstantsDefine.ViewLogicalMaxTop
+        )
 
         this.createShader()
 
@@ -120,20 +136,53 @@ export class InteractionView {
         }
     }
 
+    public render(): void {
+        this._webgl.clearColor(0.0, 0.0, 0.0, 0.0)
+        this._webgl.enable(this._webgl.DEPTH_TEST)
+        this._webgl.depthFunc(this._webgl.LEQUAL)
+        this._webgl.clear(this._webgl.COLOR_BUFFER_BIT | this._webgl.DEPTH_BUFFER_BIT)
+        this._webgl.clearDepth(1.0)
+        this._webgl.enable(this._webgl.BLEND)
+        this._webgl.blendFunc(this._webgl.SRC_ALPHA, this._webgl.ONE_MINUS_SRC_ALPHA)
+        this._webgl.useProgram(this._programId);
+        this._webgl.flush();
+    }
+
     /**
-    * 释放
+    * X座標をView座標に変換する。
+    *
+    * @param deviceX デバイスX座標
     */
-    public release(): void {
-        this._viewMatrix = null
-        // this._touchManager = null;
-        this._deviceToScreen = null
+    public transformViewX(deviceX: number): number {
+        let screenX: number = this._deviceToScreen.transformX(deviceX) // 論理座標変換した座標を取得。
+        return this._viewMatrix.invertTransformX(screenX)  // 拡大、縮小、移動後の値。
+    }
 
-        this._webgl.deleteProgram(this._programId)
-        this._programId = null
+    /**
+     * Y座標をView座標に変換する。
+     *
+     * @param deviceY デバイスY座標
+     */
+    public transformViewY(deviceY: number): number {
+        let screenY: number = this._deviceToScreen.transformY(deviceY) // 論理座標変換した座標を取得。
+        return this._viewMatrix.invertTransformY(screenY)
+    }
 
-        this._frameBuffer = null
-        this._webgl = null
-        this._canvas = null
+    /**
+     * X座標をScreen座標に変換する。
+     * @param deviceX デバイスX座標
+     */
+    public transformScreenX(deviceX: number): number {
+        return this._deviceToScreen.transformX(deviceX)
+    }
+
+    /**
+     * Y座標をScreen座標に変換する。
+     *
+     * @param deviceY デバイスY座標
+     */
+    public transformScreenY(deviceY: number): number {
+        return this._deviceToScreen.transformY(deviceY)
     }
 
     //gl context provider
@@ -147,18 +196,6 @@ export class InteractionView {
 
     public getFrameBuffer() {
         return this._frameBuffer
-    }
-
-    public render(): void {
-        this._webgl.clearColor(0.0, 0.0, 0.0, 0.0)
-        this._webgl.enable(this._webgl.DEPTH_TEST)
-        this._webgl.depthFunc(this._webgl.LEQUAL)
-        this._webgl.clear(this._webgl.COLOR_BUFFER_BIT | this._webgl.DEPTH_BUFFER_BIT)
-        this._webgl.clearDepth(1.0)
-        this._webgl.enable(this._webgl.BLEND)
-        this._webgl.blendFunc(this._webgl.SRC_ALPHA, this._webgl.ONE_MINUS_SRC_ALPHA)
-        this._webgl.useProgram(this._programId);
-        this._webgl.flush();
     }
 
 }

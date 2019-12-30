@@ -408,10 +408,8 @@ export class Live2DModel extends CubismUserModel {
         if (currentTime - this._lastChanceMotion > Utils.chanceMotionTimeRange()) {
             groupName = ConstantsDefine.MotionGroupChance
             this._lastChanceMotion = currentTime
-            console.log("sp");
         } else {
             groupName = ConstantsDefine.MotionGroupStandby
-            console.log("normal");
         }
 
         if (this._modelSetting.getMotionCount(groupName) == 0) {
@@ -419,6 +417,14 @@ export class Live2DModel extends CubismUserModel {
         }
         let no: number = Math.floor(Math.random() * this._modelSetting.getMotionCount(groupName))
         return this.startMotion(groupName, no, priority)
+    }
+
+    public startRandomTapMotion(priority: number): CubismMotionQueueEntryHandle {
+        if (this._modelSetting.getMotionCount(ConstantsDefine.MotionGroupTap) == 0) {
+            return InvalidMotionQueueEntryHandleValue
+        }
+        let no: number = Math.floor(Math.random() * this._modelSetting.getMotionCount(ConstantsDefine.MotionGroupTap))
+        return this.startMotion(ConstantsDefine.MotionGroupTap, no, priority)
     }
 
     /**

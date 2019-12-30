@@ -6,9 +6,20 @@
     <meta charset="utf-8" />
     <title>live2d demo</title>
 </head>
+<style>
+    body {
+
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+    }
+</style>
 
 <body style="position:relative;margin:0;padding:0;">
-    <img id="bgImage" src="./Resources/59440693_p0.jpg" style="position:absolute;display:block;"></img>
+    <img id="bgImage" src="./Resources/59440693_p0.jpg" style="position:absolute;display:block;"
+        οndragstart="return false;"></img>
     <canvas id="SAMPLE" style="position:absolute;display:block;right:0;"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js "> </script>
     <script src="./live2d/Core/live2dcubismcore.min.js"></script>

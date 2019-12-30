@@ -20,7 +20,7 @@ export class AppDelegate {
         this._cubismOption = new CsmOption()
         this._resourcesManager = new ResourcesManager()
         this._view = new InteractionView()
-        this._controller = new Controller()
+        this._controller = new Controller(this._resourcesManager, this._view)
     }
 
     //获取实例
@@ -37,11 +37,11 @@ export class AppDelegate {
         this._resourcesManager.releaseAllModel()
         this._resourcesManager = null;
 
-        this._controller.release()
-        this._controller = null
-
         this._view.release()
         this._view = null
+
+        this._controller.release()
+        this._controller = null
 
         CsmCubismFramework.dispose();
 
@@ -52,6 +52,10 @@ export class AppDelegate {
     public initialize(): boolean {
         //初始化绘制view
         if (!this._view.initialize(<HTMLCanvasElement>document.getElementById(ConstantsDefine.CanvasID))) return false
+        this._view.getCanvas().onmousedown = onActionDown;
+        this._view.getCanvas().onmousemove = onActionMove;
+        this._view.getCanvas().onmouseup = onActionUp;
+
         //初始化sdk
         if (!this.initializeSDK()) return false
         //载入模型
@@ -83,11 +87,42 @@ export class AppDelegate {
             //更新渲染器
             this._view.render()
             //更新模型绘制
-            this._controller.onUpdate(this._resourcesManager.getCurrentModel(), this._view.getCanvas(), this._view.getFrameBuffer())
+            this._controller.onUpdate()
             requestAnimationFrame(loop)
         }
         loop()
     }
 
+    public onActionDownForward(posX: number, posY: number): void {
+        this._controller.onEventDown(posX, posY)
+    }
 
+    public onActionMoveForward(posX: number, posY: number): void {
+        this._controller.onEventMove(posX, posY)
+    }
+
+    public onActionUpForward(posX: number, posY: number): void {
+        this._controller.onEventUp(posX, posY)
+    }
+
+}
+
+function onActionDown(e: MouseEvent): void {
+    let posX: number = e.pageX;
+    let posY: number = e.pageY;
+    AppDelegate.getInstance().onActionDownForward(posX, posY)
+}
+
+function onActionMove(e: MouseEvent): void {
+    let rect = (<Element>e.target).getBoundingClientRect()
+    let posX: number = e.clientX - rect.left;
+    let posY: number = e.clientY - rect.top;
+    AppDelegate.getInstance().onActionMoveForward(posX, posY)
+}
+
+function onActionUp(e: MouseEvent): void {
+    let rect = (<Element>e.target).getBoundingClientRect()
+    let posX: number = e.clientX - rect.left;
+    let posY: number = e.clientY - rect.top;
+    AppDelegate.getInstance().onActionUpForward(posX, posY)
 }
