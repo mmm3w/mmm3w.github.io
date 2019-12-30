@@ -202,7 +202,6 @@ export namespace ModelFactory {
             for (let i: number = 0; i < motionGroupCount; i++) {
                 group[i] = model.getMotionGroupName(i)
                 allMotionCount += model.getMotionCount(group[i])
-                console.log(group[i] + " | " + model.getMotionCount(group[i]))
             }
 
             // 读取动作数据
