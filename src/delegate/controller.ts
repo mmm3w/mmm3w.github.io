@@ -26,6 +26,7 @@ export class Controller {
         this._viewMatrix = new CsmCubismMatrix44()
         this._viewMatrix.scale(4, 4)
         this._viewMatrix.translateY(-1)
+        this._viewMatrix.translateX(1)
 
         this._touch = new TouchManager()
         this._captured = false

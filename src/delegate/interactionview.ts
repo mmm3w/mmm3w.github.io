@@ -30,9 +30,9 @@ export class InteractionView {
         this._programId = null;
         // 用于将设备坐标转换为屏幕坐标
         this._deviceToScreen = new CsmCubismMatrix44()
-
         // 画面扩大缩小移动用矩阵
         this._viewMatrix = new CsmCubismViewMatrix()
+        this._viewMatrix.translateX(1)
     }
 
     /**
@@ -71,7 +71,7 @@ export class InteractionView {
             return false
         }
         this._canvas = canvas
-        this._canvas.width = document.defaultView.innerWidth / 2
+        this._canvas.width = document.defaultView.innerWidth
         this._canvas.height = document.defaultView.innerHeight
 
         this._webgl = this._canvas.getContext("webgl") //|| this._canvas.getContext("experimental-webgl")
@@ -119,7 +119,7 @@ export class InteractionView {
         this.createShader()
 
         document.body.onresize = () => {
-            this._canvas.width = document.defaultView.innerWidth / 2
+            this._canvas.width = document.defaultView.innerWidth
             this._canvas.height = document.defaultView.innerHeight
             if (this._bgImage) {
                 this._bgImage.width = document.defaultView.innerWidth
